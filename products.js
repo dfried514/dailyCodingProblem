@@ -1,25 +1,23 @@
 const products = array => {
-  let preProducts = [1, array[0]];
-  let postProducts = [];
+  let pre = [];
+  let post = [];
   let output = [];
-  postProducts[array.length - 1] = 1;
-  postProducts[array.length - 2] = array[array.length - 1];
-  for (let i = 2; i < array.length; i++) {
-    preProducts[i] = preProducts[i-1] * array[i-1];
+  let curProduct = 1;
+
+  pre.push(curProduct);
+  for (let i = 0; i < array.length - 1; i++) {
+    curProduct *= array[i];
+    pre[i + 1] = curProduct;
   }
-  for (let i = array.length - 2; i >= 0; i--) {
-    postProducts[i] = postProducts[i+1] * array[i+1];
+  curProduct = 1;
+  post[array.length - 1] = curProduct;
+  for (let i = array.length - 1; i > 0; i--) {
+    curProduct *= array[i];
+    post[i - 1] = curProduct;
   }
   for (let i = 0; i < array.length; i++) {
-    output[i] = preProducts[i] * postProducts[i];
+    output[i] = pre[i] * post[i];
   }
-  // console.log(preProducts);
-  // console.log(postProducts);
   return output;
-};
-
-let array = [1,2,3,4,5];
-console.log(products(array));
-
-
-
+}
+module.exports = { products };
